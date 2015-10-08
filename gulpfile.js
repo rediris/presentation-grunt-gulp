@@ -125,4 +125,6 @@ gulp.task('build', ['js', 'html', 'css', 'images']);
 
 gulp.task('serve', ['open', 'watch']);
 
-gulp.task('default', ['build', 'pdf', 'exit']);
+gulp.task('default', ['build', 'exit']);
+
+gulp.task('pdf', ['build', 'pdf', 'exit']);

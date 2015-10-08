@@ -5,7 +5,8 @@ var bespoke = require('bespoke');
 var nebula = require('bespoke-theme-nebula');
 var keys = require('bespoke-keys');
 var touch = require('bespoke-touch');
-var pdf = require('bespoke-pdf');
+
+//var pdf = require('bespoke-pdf');
 var bullets = require('bespoke-bullets');
 var backdrop = require('bespoke-backdrop');
 var scale = require('bespoke-scale');
