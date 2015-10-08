@@ -1,0 +1,71 @@
+@import 'prism/themes/prism-twilight.css'
+
+// colors
+
+$black = #000
+$white = #fff
+$orange = #E59B13
+$ocean = #074962
+$purple = #832EA1
+$deeppurple = #390C2D
+$magenta = #75003C
+$greenblue = #1B4E5A
+$red = #C41338
+$background = $black
+
+$bullet = '\2022'
+
+h1,h2,h3,h4,h5,h6
+  margin 0 0 1.5rem
+  padding 0
+
+a
+  margin 0
+  padding 0
+
+li
+  &:before
+    content $bullet
+
+  &.no-bullet
+      &:before
+        content none
+
+// flat color backgrounds
+.orange
+  background-color $orange
+  &.bespoke-backdrop-active
+    opacity 1
+
+.purple
+  background-color $purple
+
+.deeppurple
+  background-color $deeppurple
+
+.greenblue
+  background-color $greenblue
+
+.magenta
+  background-color $magenta
+
+.red
+  background-color $red
+
+.ocean
+  background-color $ocean
+
+// generic text colors
+.dark
+  color $white
+
+.light
+  color $black
+
+// image background customizations
+.hoodie
+  &.bespoke-backdrop-active
+    opacity .25
+.skull
+  &.bespoke-backdrop-active
+    opacity .15

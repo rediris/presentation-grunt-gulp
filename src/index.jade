@@ -1,0 +1,348 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    title Gulp & Grunt
+    link(rel='stylesheet', type='text/css', href='build/build.css')
+    style.
+      .blue-lake {
+        background-image: url('/images/blue-lake.jpg')
+      }
+      .carina-nebula {
+        background-image: url('/images/carina-nebula.jpg')
+      }
+      .darkling-beetle {
+        background-image: url('/images/darkling-beetle.jpg')
+      }
+      .eagle-nebula {
+        background-image: url('/images/eagle-nebula.jpg')
+      }
+      .forest-sunset {
+        background-image: url('/images/forest-sunset.jpg')
+      }
+      .hoodie {
+        background-image: url('/images/hoodie.jpg')
+      }
+      .long-tail-boat {
+        background-image: url('/images/long-tail-boat.jpg')
+      }
+      .milky-way {
+        background-image: url('/images/milky-way.jpg')
+      }
+      .pipeline {
+        background-image: url('/images/pipeline.jpg')
+      }
+      .skull {
+        background-image: url('/images/skull.jpg')
+      }
+
+  body
+
+    article
+
+      section.dark(data-bespoke-backdrop='carina-nebula')
+        h1.pause Gulp & Grunt
+        p.pause …or how I gulped and grunted my way through this presentation.
+
+      section.dark(data-bespoke-backdrop='milky-way')
+        h3.pause What the heck are Gulp & Grunt?!
+        p.pause Essentially, they are javascript task runners
+          span.pause  for streamlining development
+          span.pause  and optimizing site performance
+          span.pause , among (a ton of) other things.
+
+      section.dark(data-bespoke-backdrop='eagle-nebula')
+        p.pause With either tool, almost any repetitive task can be automated:
+        ul.pause-list
+          li code minification/beautification
+          li code quality analysis
+          li image optimization/compression
+          li css vendor prefixing
+          li unit testing
+          li deployment
+          li much, much more
+
+      section.dark(data-bespoke-backdrop='blue-lake')
+        p.pause The tools are quite similar in some respects:
+        ul.pause-list
+          li both use node.js
+          li rely on npm (node package manager)
+          li use javascript to write tasks
+          li …and that's it
+        br
+        p.pause They are actually quite different under the hood.
+
+      // GRUNT TASK CONFIG
+      section.dark(data-bespoke-backdrop='hoodie')
+        h2 Under the Hood
+        h3.pause Grunt
+        h4 Task Configuration
+        ul.pause-list
+          li Requires extensive configuration of gruntfile.js
+          li structured around built-in tasks
+            ul
+              li
+                small concat, init, lint, min, qunit, server, test, watch
+          li typically requires defining I/O for each task
+          li tasks can be extended by plugins
+          li plugins can be very complex, and may handle many tasks
+
+      // GULP TASK CONFIG
+      section.dark(data-bespoke-backdrop='hoodie')
+        h2 Under the Hood
+        h3.pause Gulp
+        h4 Task Configuration
+        ul.pause-list
+          li emphasis on code
+          li no built in tasks
+          li uses node's <a href="https://nodejs.org/api/stream.html#stream_stream">streams</a>
+            ul
+              li
+                small Streams are a method of combining myriad tiny transform operations into a 'pipeline'
+          li tasks are created by piping in processes (think chaining jQuery methods)
+
+      // GRUNT TASK EXECUTION
+      section.dark(data-bespoke-backdrop='hoodie')
+        h2 Under the Hood
+        h3.pause Grunt
+        h4 Task Execution
+        ul.pause-list
+          li each task is executed sequentially:
+            ul
+              li
+                small open file
+              li
+                small execute the current process
+              li
+                small save changes
+              li
+                small close the current processed file for the next process to access it
+          li use of intermediary temp files/disk writes
+
+      // GULP TASK EXECUTION
+      section.dark(data-bespoke-backdrop='hoodie')
+        h2 Under the Hood
+        h3.pause Gulp
+        h4 Task Execution
+        ul.pause-list
+          li again, node streams
+          li tasks are executed with maximum concurrency using <a href="https://www.npmjs.com/package/orchestrator">Orchestrator</a>
+          li executes in memory
+          li no temp files
+          li uses a virtual file format called Vinyl
+            ul
+              li
+                small a metadata object format with 2 main attributes (path and contents)
+              li
+                small examples: local file system, files on S3, FTP, Dropbox, Box, node streams
+
+      // GRUNT ECOSYSTEM
+      section.dark(data-bespoke-backdrop='forest-sunset')
+        h2 ECOSYSTEM
+        h3 Grunt
+        h4 Plugins & Community
+        ul.pause-list
+          li since late 2011
+          li 5189 plugins
+          li has a larger user base and more mature community
+          li Github metrics
+            ul
+              li
+                small watchers: 597, stars: 10,016, forks: 1,204
+
+      // GULP ECOSYSTEM
+      section.dark(data-bespoke-backdrop='forest-sunset')
+        h2 ECOSYSTEM
+        h3 Gulp
+        h4 Plugins & Community
+        ul.pause-list
+          li since mid 2013
+          li 1881 plugins
+          li has a (seemingly) smaller user base
+          li based on Github metrics, is more popular than Grunt
+            ul
+              li
+                small watchers: 803, stars: 16,615, forks: 1,770
+          li community-built tasks work well with each other
+          li plugin philosophy:
+            span.pause  “do one thing, and do it well.”
+
+      // ERRORS
+      section.dark(data-bespoke-backdrop='darkling-beetle')
+        h2 Error Handling
+        h3.pause Grunt
+        p.pause Grunt already has robust error handling
+        br
+        h3.pause Gulp
+        p.pause Gulp's team doesn't deny that built-in error management "sucks"
+        br
+        p.pause Errors are either a result of failed tasks or failed pipeline portions
+
+
+      // EXAMPLES - GRUNT
+      section
+        h2 Examples
+        h3 Sample gruntfile.js
+        p A basic CSS minifier, grunt flavored
+        pre
+          code.language-javascript.
+            module.exports = function(grunt) {
+              // Display task-execution time in the CLI
+              require('time-grunt')(grunt);
+              // Configuration
+              grunt.initConfig({
+                pkg: grunt.file.readJSON('package.json'),
+                // Combine CSS files in src folder
+                concat_css: {
+                  dist: {
+                    src: ['src/*.css'],
+                    dest: 'css/app.css'
+                  }
+                },
+                // Minify css
+                cssmin: {
+                  target: {
+                    // Write the minified file in the css directory
+                    files: [{
+                      'css/app.min.css': ['css/app.css']
+                    }]
+                  }
+                }
+              });
+              // Load plugins
+              grunt.loadNpmTasks('grunt-concat-css');
+              grunt.loadNpmTasks('grunt-contrib-cssmin');
+              // Execute with `grunt` command
+              grunt.registerTask('default', ['concat_css', 'cssmin']);
+            }
+
+      // EXAMPLES - GULP
+      section
+        h2 Examples
+        h3 Sample gulpfile.js
+        p A basic CSS minifier, gulp flavored
+        pre
+          code.language-javascript.
+            // Load plugins
+            var gulp = require('gulp');
+            var concatenate = require('gulp-concat-css');
+            var minify = require('gulp-cssmin');
+            var duration = require('gulp-duration');
+            // Configuration
+            gulp.task('default', function() {
+              gulp.src('src/*.css')
+              // Combine css files in src folder
+              .pipe(concatenate('app.min.css'))
+              // Minify CSS
+              .pipe(minify())
+              // Display task-execution time in CLI
+              .pipe(duration('Execution Time: '))
+              // Save minified file in the css folder
+              .pipe(gulp.dest('css/'));
+            });
+            // Execute with `gulp` command
+
+      section.dark(data-bespoke-backdrop='purple')
+        h2.pause Down the road
+        h3.pause Grunt
+        p.pause <a href="https://github.com/gruntjs/grunt-next">grunt-next</a> (v1 alpha) uses Orchestrator.
+        ul.pause-list
+          li No temp files
+          li concurrent task execution
+          li increased speed
+        br
+        h3.pause Gulp
+        ul.pause-list
+          li
+            small better error handling
+          li
+            small see many improvements
+
+      section.dark(data-bespoke-backdrop='ocean')
+        h2.pause Which is better?
+        h3.pause To grunt or to gulp?
+        h4.pause It depends.
+        br
+        p.pause Chances are, the project will determine which you use.
+        br
+        p.pause Given time, you will likely use both.
+
+      // BESPOKE CREDIT
+      section.dark(data-bespoke-backdrop='pipeline')(data-bespoke-hash='credits')
+        h3 This presentation was built with Gulp and <a href="https://github.com/markdalgleish/bespoke.js">bespoke.js</a>.
+
+      // REFERENCES
+      section.dark(data-bespoke-backdrop='long-tail-boat' data-bespoke-hash='references')
+        h2 References
+        h3 Further Reading
+        br
+        ul
+          li.no-bullet
+            small
+              a(href='http://gruntjs.com/') GruntJS
+          li.no-bullet
+            small
+              a(href='http://gulpjs.com/') GulpJS
+          li.no-bullet
+            small
+              a(href='http://www.hongkiat.com/blog/gulp-vs-grunt/') The Battle Of Build Scripts: Gulp Vs Grunt
+          li.no-bullet
+            small
+              a(href='http://markdalgleish.github.io/presentation-build-wars-gulp-vs-grunt/') Build Wars
+          li.no-bullet
+            small
+              a(href='https://medium.com/@preslavrachev/gulp-vs-grunt-why-one-why-the-other-f5d3b398edc4') Gulp vs Grunt. Why one? Why the Other?
+          li.no-bullet
+            small
+              a(href='https://medium.com/@contrahacks/gulp-3828e8126466') Gulp: The vision, history, and future of the project
+          li.no-bullet
+            small
+              a(href='http://www.oomphinc.com/notes/2014/03/gulp-vs-grunt-node-js-automation-tools-showdown/') Gulp vs. Grunt: Node.js Automation Tools Showdown
+          li.no-bullet
+            small
+              a(href='http://sixrevisions.com/web-development/grunt-vs-gulp/') Grunt vs Gulp: Which One Should You Use?
+
+
+      // IMAGE REFERENCES
+      section.dark(data-bespoke-backdrop='long-tail-boat' data-bespoke-hash='images')
+        h2 References
+        h3 Images
+        ul
+          li.no-bullet
+            small
+              a(href='https://www.flickr.com/photos/zoltlevay/3911679143/') Pillar and Jet in the Carina Nebula
+          li.no-bullet
+            small
+              a(href='https://www.flickr.com/photos/image-catalog/19958934741/') Long-Tail Boat at Night
+          li.no-bullet
+            small
+              a(href='https://www.flickr.com/photos/image-catalog/19146375010/') Silhouette of Person in Hoodie on Boardwalk at Night
+          li.no-bullet
+            small
+              a(href='https://www.flickr.com/photos/image-catalog/18072112439/') Blue Lake in Dark Landscape
+          li.no-bullet
+            small
+              a(href='https://www.flickr.com/photos/image-catalog/18271522102/') Dark Green Forest at Sunset
+          li.no-bullet
+            small
+              a(href='https://www.flickr.com/photos/ryanhallock/17076197649/') Milky Way
+          li.no-bullet
+            small
+              a(href='https://www.flickr.com/photos/nasacommons/9460796504/') Stellar
+          li.no-bullet
+            small
+              a(href='https://www.flickr.com/photos/usgsbiml/10333895333/') Darkling Beetle Head
+          li.no-bullet
+            small
+              a(href='https://www.flickr.com/photos/smu_cul_digitalcollections/13294057705/') Carbon Black Plant Pipeline
+          li.no-bullet
+            small
+              a(href='https://www.flickr.com/photos/136050633@N03/22011910772/') Incomplete Skull 1
+
+
+      // BYE!
+      section.dark(data-bespoke-backdrop='skull' data-bespoke-hash='end')
+        h3 Fin
+
+    script(src='build/build.js')
